@@ -50,7 +50,7 @@ struct pamu_isr_data {
 
 static struct paace *ppaact;
 static struct paace *spaact;
-static struct ome *omt;
+static struct ome *omt __initdata;
 
 /*
  * Table for matching compatible strings, for device tree
@@ -59,7 +59,7 @@ static struct ome *omt;
  * SOCs. For the older SOCs "fsl,qoriq-device-config-1.0"
  * string would be used.
 */
-static const struct of_device_id guts_device_ids[] = {
+static const struct of_device_id guts_device_ids[] __initconst = {
 	{ .compatible = "fsl,qoriq-device-config-1.0", },
 	{ .compatible = "fsl,qoriq-device-config-2.0", },
 	{}
@@ -612,7 +612,7 @@ found_cpu_node:
  * Memory accesses to QMAN and BMAN private memory need not be coherent, so
  * clear the PAACE entry coherency attribute for them.
  */
-static void setup_qbman_paace(struct paace *ppaace, int  paace_type)
+static void __init setup_qbman_paace(struct paace *ppaace, int  paace_type)
 {
 	switch (paace_type) {
 	case QMAN_PAACE:
@@ -679,7 +679,7 @@ static void __init setup_omt(struct ome *omt)
  * Get the maximum number of PAACT table entries
  * and subwindows supported by PAMU
  */
-static void get_pamu_cap_values(unsigned long pamu_reg_base)
+static void __init get_pamu_cap_values(unsigned long pamu_reg_base)
 {
 	u32 pc_val;
 
@@ -689,7 +689,7 @@ static void get_pamu_cap_values(unsigned long pamu_reg_base)
 }
 
 /* Setup PAMU registers pointing to PAACT, SPAACT and OMT */
-int setup_one_pamu(unsigned long pamu_reg_base, unsigned long pamu_reg_size,
+static int __init setup_one_pamu(unsigned long pamu_reg_base, unsigned long pamu_reg_size,
 	           phys_addr_t ppaact_phys, phys_addr_t spaact_phys,
 		   phys_addr_t omt_phys)
 {
@@ -998,7 +998,7 @@ error:
 static const struct {
 	u32 svr;
 	u32 port_id;
-} port_id_map[] = {
+} port_id_map[] __initconst = {
 	{0x82100010, 0xFF000000},	/* P2040 1.0 */
 	{0x82100011, 0xFF000000},	/* P2040 1.1 */
 	{0x82100110, 0xFF000000},	/* P2041 1.0 */

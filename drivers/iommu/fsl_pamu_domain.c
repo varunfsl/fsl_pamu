@@ -1095,7 +1095,7 @@ static const struct iommu_ops fsl_pamu_ops = {
 	.remove_device	= fsl_pamu_remove_device,
 };
 
-int pamu_domain_init(void)
+int __init pamu_domain_init(void)
 {
 	int ret = 0;
 
