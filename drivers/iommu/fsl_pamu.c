@@ -18,23 +18,13 @@
 
 #define pr_fmt(fmt)    "fsl-pamu: %s: " fmt, __func__
 
-#include <linux/init.h>
-#include <linux/iommu.h>
-#include <linux/slab.h>
-#include <linux/module.h>
-#include <linux/types.h>
-#include <linux/mm.h>
+#include "fsl_pamu.h"
+
 #include <linux/interrupt.h>
-#include <linux/device.h>
-#include <linux/of_platform.h>
-#include <linux/bootmem.h>
 #include <linux/genalloc.h>
-#include <asm/io.h>
-#include <asm/bitops.h>
+
 #include <asm/mpc85xx.h>
 #include <asm/fsl_guts.h>
-
-#include "fsl_pamu.h"
 
 /* define indexes for each operation mapping scenario */
 #define OMI_QMAN        0x00

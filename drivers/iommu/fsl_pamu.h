@@ -19,6 +19,8 @@
 #ifndef __FSL_PAMU_H
 #define __FSL_PAMU_H
 
+#include <linux/iommu.h>
+
 #include <asm/fsl_pamu_stash.h>
 
 /* Bit Field macros

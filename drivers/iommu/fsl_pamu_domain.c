@@ -19,25 +19,9 @@
 
 #define pr_fmt(fmt)    "fsl-pamu-domain: %s: " fmt, __func__
 
-#include <linux/init.h>
-#include <linux/iommu.h>
-#include <linux/notifier.h>
-#include <linux/slab.h>
-#include <linux/module.h>
-#include <linux/types.h>
-#include <linux/mm.h>
-#include <linux/interrupt.h>
-#include <linux/device.h>
-#include <linux/of_platform.h>
-#include <linux/bootmem.h>
-#include <linux/err.h>
-#include <asm/io.h>
-#include <asm/bitops.h>
-
-#include <asm/pci-bridge.h>
-#include <sysdev/fsl_pci.h>
-
 #include "fsl_pamu_domain.h"
+
+#include <sysdev/fsl_pci.h>
 
 /*
  * Global spinlock that needs to be held while
