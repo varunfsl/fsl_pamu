@@ -1135,7 +1135,7 @@ static int __init fsl_pamu_probe(struct platform_device *pdev)
 	spaace_pool = gen_pool_create(ilog2(sizeof(struct paace)), -1);
 	if (!spaace_pool) {
 		ret = -ENOMEM;
-		dev_err(dev, "PAMU : failed to allocate spaace gen pool\n");
+		dev_err(dev, "Failed to allocate spaace gen pool\n");
 		goto error;
 	}
 

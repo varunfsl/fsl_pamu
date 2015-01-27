@@ -113,7 +113,7 @@ static int map_subwins(int liodn, struct fsl_dma_domain *dma_domain)
 						 sub_win_ptr[i].prot);
 			spin_unlock_irqrestore(&iommu_lock, flags);
 			if (ret) {
-				pr_debug("PAMU SPAACE configuration failed for liodn %d\n",
+				pr_debug("SPAACE configuration failed for liodn %d\n",
 					 liodn);
 				return ret;
 			}
@@ -139,7 +139,7 @@ static int map_win(int liodn, struct fsl_dma_domain *dma_domain)
 				 0, wnd->prot);
 	spin_unlock_irqrestore(&iommu_lock, flags);
 	if (ret)
-		pr_debug("PAMU PAACE configuration failed for liodn %d\n",
+		pr_debug("PAACE configuration failed for liodn %d\n",
 			liodn);
 
 	return ret;
@@ -250,7 +250,7 @@ static int pamu_set_liodn(int liodn, struct device *dev,
 					 dma_domain->stash_id, win_cnt, 0);
 	spin_unlock_irqrestore(&iommu_lock, flags);
 	if (ret) {
-		pr_debug("PAMU PAACE configuration failed for liodn %d, win_cnt =%d\n", liodn, win_cnt);
+		pr_debug("PAACE configuration failed for liodn %d, win_cnt =%d\n", liodn, win_cnt);
 		return ret;
 	}
 
@@ -267,7 +267,7 @@ static int pamu_set_liodn(int liodn, struct device *dev,
 							 0, 0);
 			spin_unlock_irqrestore(&iommu_lock, flags);
 			if (ret) {
-				pr_debug("PAMU SPAACE configuration failed for liodn %d\n", liodn);
+				pr_debug("SPAACE configuration failed for liodn %d\n", liodn);
 				return ret;
 			}
 		}
@@ -283,13 +283,13 @@ static int check_size(u64 size, dma_addr_t iova)
 	 * to PAMU page size.
 	 */
 	if ((size & (size - 1)) || size < PAMU_PAGE_SIZE) {
-		pr_debug("%s: size too small or not a power of two\n", __func__);
+		pr_debug("Size too small or not a power of two\n");
 		return -EINVAL;
 	}
 
 	/* iova must be page size aligned*/
 	if (iova & (size - 1)) {
-		pr_debug("%s: address is not aligned with window size\n", __func__);
+		pr_debug("Address is not aligned with window size\n");
 		return -EINVAL;
 	}
 
