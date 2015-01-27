@@ -1150,7 +1150,7 @@ static int __init fsl_pamu_probe(struct platform_device *pdev)
 	for (pamu_reg_off = 0, pamu_counter = 0x80000000; pamu_reg_off < size;
 	     pamu_reg_off += PAMU_OFFSET, pamu_counter >>= 1) {
 
-		pamu_reg_base = (unsigned long) pamu_regs + pamu_reg_off;
+		pamu_reg_base = (unsigned long)pamu_regs + pamu_reg_off;
 		setup_one_pamu(pamu_reg_base, pamu_reg_off, ppaact_phys,
 				 spaact_phys, omt_phys);
 		/* Disable PAMU bypass for this PAMU */

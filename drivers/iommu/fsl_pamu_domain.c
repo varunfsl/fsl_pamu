@@ -845,8 +845,8 @@ static int fsl_pamu_get_domain_attr(struct iommu_domain *domain,
 
 	switch (attr_type) {
 	case DOMAIN_ATTR_FSL_PAMU_STASH:
-		memcpy((struct pamu_stash_attribute *) data, &dma_domain->dma_stash,
-				 sizeof(struct pamu_stash_attribute));
+		memcpy(data, &dma_domain->dma_stash,
+		       sizeof(struct pamu_stash_attribute));
 		break;
 	case DOMAIN_ATTR_FSL_PAMU_ENABLE:
 		*(int *)data = dma_domain->enabled;
