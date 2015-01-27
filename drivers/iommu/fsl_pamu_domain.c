@@ -682,7 +682,7 @@ static int fsl_pamu_attach_device(struct iommu_domain *domain,
 					 liodn, liodn_cnt);
 	} else {
 		pr_debug("missing fsl,liodn property at %s\n",
-		          dev->of_node->full_name);
+			 dev->of_node->full_name);
 			ret = -EINVAL;
 	}
 
@@ -718,7 +718,7 @@ static void fsl_pamu_detach_device(struct iommu_domain *domain,
 		detach_device(dev, dma_domain);
 	else
 		pr_debug("missing fsl,liodn property at %s\n",
-		          dev->of_node->full_name);
+			 dev->of_node->full_name);
 }
 
 static  int configure_domain_geometry(struct iommu_domain *domain, void *data)

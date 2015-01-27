@@ -583,7 +583,7 @@ found_cpu_node:
 	}
 
 	pr_debug("stash dest not found for %d on vcpu %d\n",
-	          stash_dest_hint, vcpu);
+		 stash_dest_hint, vcpu);
 	return ~(u32)0;
 }
 
@@ -675,8 +675,8 @@ static void __init get_pamu_cap_values(unsigned long pamu_reg_base)
 
 /* Setup PAMU registers pointing to PAACT, SPAACT and OMT */
 static int __init setup_one_pamu(unsigned long pamu_reg_base, unsigned long pamu_reg_size,
-	           phys_addr_t ppaact_phys, phys_addr_t spaact_phys,
-		   phys_addr_t omt_phys)
+				 phys_addr_t ppaact_phys, phys_addr_t spaact_phys,
+				 phys_addr_t omt_phys)
 {
 	u32 *pc;
 	struct pamu_mmap_regs *pamu_regs;
