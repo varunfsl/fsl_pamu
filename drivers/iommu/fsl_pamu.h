@@ -333,7 +333,7 @@ struct paace {
 #define NUM_MOE 128
 struct ome {
 	u8 moe[NUM_MOE];
-} __attribute__((packed));
+} __packed;
 
 #define PAACT_SIZE              (sizeof(struct paace) * PAACE_NUMBER_ENTRIES)
 #define SPAACT_SIZE              (sizeof(struct paace) * SPAACE_NUMBER_ENTRIES)
