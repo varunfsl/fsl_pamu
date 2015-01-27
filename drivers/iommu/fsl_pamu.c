@@ -302,11 +302,10 @@ int pamu_disable_spaace(int liodn, u32 subwin)
 		paace = pamu_get_spaace(paace, subwin - 1);
 		if (!paace)
 			return -ENOENT;
-		set_bf(paace->addr_bitfields, PAACE_AF_V,
-			 PAACE_V_INVALID);
+		set_bf(paace->addr_bitfields, PAACE_AF_V, PAACE_V_INVALID);
 	} else {
 		set_bf(paace->addr_bitfields, PAACE_AF_AP,
-			 PAACE_AP_PERMS_DENIED);
+		       PAACE_AP_PERMS_DENIED);
 	}
 
 	mb();
@@ -354,7 +353,7 @@ int pamu_config_ppaace(int liodn, phys_addr_t win_addr, phys_addr_t win_size,
 
 	/* window size is 2^(WSE+1) bytes */
 	set_bf(ppaace->addr_bitfields, PPAACE_AF_WSE,
-		map_addrspace_size_to_wse(win_size));
+	       map_addrspace_size_to_wse(win_size));
 
 	pamu_init_ppaace(ppaace);
 
@@ -568,7 +567,7 @@ found_cpu_node:
 		prop = of_get_property(node, "next-level-cache", 0);
 		if (!prop) {
 			pr_debug("can't find next-level-cache at %s\n",
-				node->full_name);
+				 node->full_name);
 			of_node_put(node);
 			return ~(u32)0;  /* can't traverse any further */
 		}
@@ -712,7 +711,7 @@ static int __init setup_one_pamu(unsigned long pamu_reg_base, unsigned long pamu
 	 */
 
 	out_be32((u32 *)(pamu_reg_base + PAMU_PICS),
-			PAMU_ACCESS_VIOLATION_ENABLE);
+		 PAMU_ACCESS_VIOLATION_ENABLE);
 	out_be32(pc, PAMU_PC_PE | PAMU_PC_OCE | PAMU_PC_SPCC | PAMU_PC_PPCC);
 	return 0;
 }
@@ -742,9 +741,9 @@ static void __init setup_liodns(void)
 			ppaace->wbah = 0;
 			set_bf(ppaace->addr_bitfields, PPAACE_AF_WBAL, 0);
 			set_bf(ppaace->impl_attr, PAACE_IA_ATM,
-				PAACE_ATM_NO_XLATE);
+			       PAACE_ATM_NO_XLATE);
 			set_bf(ppaace->addr_bitfields, PAACE_AF_AP,
-				PAACE_AP_PERMS_ALL);
+			       PAACE_AP_PERMS_ALL);
 			if (of_device_is_compatible(node, "fsl,qman-portal"))
 				setup_qbman_paace(ppaace, QMAN_PORTAL_PAACE);
 			if (of_device_is_compatible(node, "fsl,qman"))
@@ -777,14 +776,16 @@ irqreturn_t pamu_av_isr(int irq, void *arg)
 			pr_emerg("POES2=%08x\n", in_be32(p + PAMU_POES2));
 			pr_emerg("AVS1=%08x\n", avs1);
 			pr_emerg("AVS2=%08x\n", in_be32(p + PAMU_AVS2));
-			pr_emerg("AVA=%016llx\n", make64(in_be32(p + PAMU_AVAH),
-				in_be32(p + PAMU_AVAL)));
+			pr_emerg("AVA=%016llx\n",
+				 make64(in_be32(p + PAMU_AVAH),
+					in_be32(p + PAMU_AVAL)));
 			pr_emerg("UDAD=%08x\n", in_be32(p + PAMU_UDAD));
-			pr_emerg("POEA=%016llx\n", make64(in_be32(p + PAMU_POEAH),
-				in_be32(p + PAMU_POEAL)));
+			pr_emerg("POEA=%016llx\n",
+				 make64(in_be32(p + PAMU_POEAH),
+					in_be32(p + PAMU_POEAL)));
 
 			phys = make64(in_be32(p + PAMU_POEAH),
-				in_be32(p + PAMU_POEAL));
+				      in_be32(p + PAMU_POEAL));
 
 			/* Assume that POEA points to a PAACE */
 			if (phys) {
@@ -1150,7 +1151,7 @@ static int __init fsl_pamu_probe(struct platform_device *pdev)
 
 		pamu_reg_base = (unsigned long)pamu_regs + pamu_reg_off;
 		setup_one_pamu(pamu_reg_base, pamu_reg_off, ppaact_phys,
-				 spaact_phys, omt_phys);
+			       spaact_phys, omt_phys);
 		/* Disable PAMU bypass for this PAMU */
 		pamubypenr &= ~pamu_counter;
 	}

@@ -36,21 +36,20 @@ static DEFINE_SPINLOCK(device_domain_lock);
 static int __init iommu_init_mempool(void)
 {
 	fsl_pamu_domain_cache = kmem_cache_create("fsl_pamu_domain",
-					 sizeof(struct fsl_dma_domain),
-					 0,
-					 SLAB_HWCACHE_ALIGN,
-
-					 NULL);
+						  sizeof(struct fsl_dma_domain),
+						  0,
+						  SLAB_HWCACHE_ALIGN,
+						  NULL);
 	if (!fsl_pamu_domain_cache) {
 		pr_debug("Couldn't create fsl iommu_domain cache\n");
 		return -ENOMEM;
 	}
 
 	iommu_devinfo_cache = kmem_cache_create("iommu_devinfo",
-					 sizeof(struct device_domain_info),
-					 0,
-					 SLAB_HWCACHE_ALIGN,
-					 NULL);
+						sizeof(struct device_domain_info),
+						0,
+						SLAB_HWCACHE_ALIGN,
+						NULL);
 	if (!iommu_devinfo_cache) {
 		pr_debug("Couldn't create devinfo cache\n");
 		kmem_cache_destroy(fsl_pamu_domain_cache);
@@ -139,8 +138,7 @@ static int map_win(int liodn, struct fsl_dma_domain *dma_domain)
 				 0, wnd->prot);
 	spin_unlock_irqrestore(&iommu_lock, flags);
 	if (ret)
-		pr_debug("PAACE configuration failed for liodn %d\n",
-			liodn);
+		pr_debug("PAACE configuration failed for liodn %d\n", liodn);
 
 	return ret;
 }
@@ -194,7 +192,7 @@ static int update_liodn(int liodn, struct fsl_dma_domain *dma_domain, u32 wnd_nr
 }
 
 static int update_liodn_stash(int liodn, struct fsl_dma_domain *dma_domain,
-				 u32 val)
+			      u32 val)
 {
 	int ret = 0, i;
 	unsigned long flags;
@@ -222,9 +220,9 @@ static int update_liodn_stash(int liodn, struct fsl_dma_domain *dma_domain,
 
 /* Set the geometry parameters for a LIODN */
 static int pamu_set_liodn(int liodn, struct device *dev,
-			   struct fsl_dma_domain *dma_domain,
-			   struct iommu_domain_geometry *geom_attr,
-			   u32 win_cnt)
+			  struct fsl_dma_domain *dma_domain,
+			  struct iommu_domain_geometry *geom_attr,
+			  u32 win_cnt)
 {
 	phys_addr_t window_addr, window_size;
 	phys_addr_t subwin_size;
@@ -381,12 +379,12 @@ static void attach_device(struct fsl_dma_domain *dma_domain, int liodn, struct d
 }
 
 static phys_addr_t fsl_pamu_iova_to_phys(struct iommu_domain *domain,
-					    dma_addr_t iova)
+					 dma_addr_t iova)
 {
 	struct fsl_dma_domain *dma_domain = domain->priv;
 
 	if ((iova < domain->geometry.aperture_start) ||
-		iova > (domain->geometry.aperture_end))
+	    iova > (domain->geometry.aperture_end))
 		return 0;
 
 	return get_phys_addr(dma_domain, iova);
@@ -441,7 +439,7 @@ static int pamu_set_domain_geometry(struct fsl_dma_domain *dma_domain,
 
 	list_for_each_entry(info, &dma_domain->devices, link) {
 		ret = pamu_set_liodn(info->liodn, info->dev, dma_domain,
-				      geom_attr, win_cnt);
+				     geom_attr, win_cnt);
 		if (ret)
 			break;
 	}
@@ -602,8 +600,8 @@ static int fsl_pamu_window_enable(struct iommu_domain *domain, u32 wnd_nr,
  * and window mappings.
  */
 static int handle_attach_device(struct fsl_dma_domain *dma_domain,
-				 struct device *dev, const u32 *liodn,
-				 int num)
+				struct device *dev, const u32 *liodn,
+				int num)
 {
 	unsigned long flags;
 	struct iommu_domain *domain = dma_domain->iommu_domain;
@@ -615,7 +613,7 @@ static int handle_attach_device(struct fsl_dma_domain *dma_domain,
 		/* Ensure that LIODN value is valid */
 		if (liodn[i] >= PAACE_NUMBER_ENTRIES) {
 			pr_debug("Invalid liodn %d, attach device failed for %s\n",
-				liodn[i], dev->of_node->full_name);
+				 liodn[i], dev->of_node->full_name);
 			ret = -EINVAL;
 			break;
 		}
@@ -630,8 +628,7 @@ static int handle_attach_device(struct fsl_dma_domain *dma_domain,
 			u32 win_cnt = dma_domain->win_cnt > 1 ? dma_domain->win_cnt : 0;
 
 			ret = pamu_set_liodn(liodn[i], dev, dma_domain,
-					      &domain->geometry,
-					      win_cnt);
+					     &domain->geometry, win_cnt);
 			if (ret)
 				break;
 			if (dma_domain->mapped) {
@@ -678,8 +675,7 @@ static int fsl_pamu_attach_device(struct iommu_domain *domain,
 	liodn = of_get_property(dev->of_node, "fsl,liodn", &len);
 	if (liodn) {
 		liodn_cnt = len / sizeof(u32);
-		ret = handle_attach_device(dma_domain, dev,
-					 liodn, liodn_cnt);
+		ret = handle_attach_device(dma_domain, dev, liodn, liodn_cnt);
 	} else {
 		pr_debug("missing fsl,liodn property at %s\n",
 			 dev->of_node->full_name);
@@ -690,7 +686,7 @@ static int fsl_pamu_attach_device(struct iommu_domain *domain,
 }
 
 static void fsl_pamu_detach_device(struct iommu_domain *domain,
-				      struct device *dev)
+				   struct device *dev)
 {
 	struct fsl_dma_domain *dma_domain = domain->priv;
 	const u32 *prop;
@@ -734,10 +730,10 @@ static  int configure_domain_geometry(struct iommu_domain *domain, void *data)
 	 * DMA outside of the geometry.
 	 */
 	if (check_size(geom_size, geom_attr->aperture_start) ||
-		!geom_attr->force_aperture) {
-			pr_debug("Invalid PAMU geometry attributes\n");
-			return -EINVAL;
-		}
+	    !geom_attr->force_aperture) {
+		pr_debug("Invalid PAMU geometry attributes\n");
+		return -EINVAL;
+	}
 
 	spin_lock_irqsave(&dma_domain->domain_lock, flags);
 	if (dma_domain->enabled) {
@@ -766,7 +762,7 @@ static int configure_domain_stash(struct fsl_dma_domain *dma_domain, void *data)
 	spin_lock_irqsave(&dma_domain->domain_lock, flags);
 
 	memcpy(&dma_domain->dma_stash, stash_attr,
-		 sizeof(struct pamu_stash_attribute));
+	       sizeof(struct pamu_stash_attribute));
 
 	dma_domain->stash_id = get_stash_id(stash_attr->cache,
 					    stash_attr->cpu);
@@ -799,8 +795,7 @@ static int configure_domain_dma_state(struct fsl_dma_domain *dma_domain, bool en
 	}
 
 	dma_domain->enabled = enable;
-	list_for_each_entry(info, &dma_domain->devices,
-				 link) {
+	list_for_each_entry(info, &dma_domain->devices, link) {
 		ret = (enable) ? pamu_enable_liodn(info->liodn) :
 			pamu_disable_liodn(info->liodn);
 		if (ret)
@@ -813,7 +808,7 @@ static int configure_domain_dma_state(struct fsl_dma_domain *dma_domain, bool en
 }
 
 static int fsl_pamu_set_domain_attr(struct iommu_domain *domain,
-				 enum iommu_attr attr_type, void *data)
+				    enum iommu_attr attr_type, void *data)
 {
 	struct fsl_dma_domain *dma_domain = domain->priv;
 	int ret = 0;
@@ -838,7 +833,7 @@ static int fsl_pamu_set_domain_attr(struct iommu_domain *domain,
 }
 
 static int fsl_pamu_get_domain_attr(struct iommu_domain *domain,
-				 enum iommu_attr attr_type, void *data)
+				    enum iommu_attr attr_type, void *data)
 {
 	struct fsl_dma_domain *dma_domain = domain->priv;
 	int ret = 0;
@@ -1034,7 +1029,7 @@ static int fsl_pamu_set_windows(struct iommu_domain *domain, u32 w_count)
 	}
 
 	ret = pamu_set_domain_geometry(dma_domain, &domain->geometry,
-				((w_count > 1) ? w_count : 0));
+				       ((w_count > 1) ? w_count : 0));
 	if (!ret) {
 		kfree(dma_domain->win_arr);
 		dma_domain->win_arr = kcalloc(w_count,
