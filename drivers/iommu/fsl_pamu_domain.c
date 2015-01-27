@@ -285,7 +285,7 @@ static int check_size(u64 size, dma_addr_t iova)
 		return -EINVAL;
 	}
 
-	/* iova must be page size aligned*/
+	/* iova must be page size aligned */
 	if (iova & (size - 1)) {
 		pr_debug("Address is not aligned with window size\n");
 		return -EINVAL;
@@ -779,7 +779,7 @@ static int configure_domain_stash(struct fsl_dma_domain *dma_domain, void *data)
 	return ret;
 }
 
-/* Configure domain dma state i.e. enable/disable DMA*/
+/* Configure domain dma state i.e. enable/disable DMA */
 static int configure_domain_dma_state(struct fsl_dma_domain *dma_domain, bool enable)
 {
 	struct device_domain_info *info;
@@ -876,7 +876,7 @@ static  bool check_pci_ctl_endpt_part(struct pci_controller *pci_ctl)
 	/* Check the PCI controller version number by readding BRR1 register */
 	version = in_be32(pci_ctl->cfg_addr + (PCI_FSL_BRR1 >> 2));
 	version &= PCI_FSL_BRR1_VER;
-	/* If PCI controller version is >= 0x204 we can partition endpoints*/
+	/* If PCI controller version is >= 0x204 we can partition endpoints */
 	if (version >= 0x204)
 		return 1;
 

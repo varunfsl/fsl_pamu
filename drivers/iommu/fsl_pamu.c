@@ -35,7 +35,7 @@
 #define make64(high, low) (((u64)(high) << 32) | (low))
 
 struct pamu_isr_data {
-	void __iomem *pamu_reg_base;	/* Base address of PAMU regs*/
+	void __iomem *pamu_reg_base;	/* Base address of PAMU regs */
 	unsigned int count;		/* The number of PAMUs */
 };
 
@@ -49,7 +49,7 @@ static struct ome *omt __initdata;
  * "fsl,qoriq-device-config-2.0" corresponds to T4 & B4
  * SOCs. For the older SOCs "fsl,qoriq-device-config-1.0"
  * string would be used.
-*/
+ */
 static const struct of_device_id guts_device_ids[] __initconst = {
 	{ .compatible = "fsl,qoriq-device-config-1.0", },
 	{ .compatible = "fsl,qoriq-device-config-2.0", },
@@ -63,7 +63,7 @@ static const struct of_device_id guts_device_ids[] __initconst = {
  * "fsl,b4860-l3-cache-controller" corresponds to B4 &
  * "fsl,p4080-l3-cache-controller" corresponds to other,
  * SOCs.
-*/
+ */
 static const struct of_device_id l3_device_ids[] = {
 	{ .compatible = "fsl,t4240-l3-cache-controller", },
 	{ .compatible = "fsl,b4860-l3-cache-controller", },
@@ -231,7 +231,7 @@ static struct paace *pamu_get_spaace(struct paace *paace, u32 wnum)
  * If no SPAACE entry is available or the allocator can not reserve the required
  * number of contiguous entries function returns ULONG_MAX indicating a failure.
  *
-*/
+ */
 static unsigned long pamu_get_fspi_and_allocate(u32 subwin_cnt)
 {
 	unsigned long spaace_addr;
@@ -494,11 +494,11 @@ int pamu_config_spaace(int liodn, u32 subwin_cnt, u32 subwin,
 }
 
 /**
-* get_ome_index() - Returns the index in the operation mapping table
-*                   for device.
-* @*omi_index: pointer for storing the index value
-*
-*/
+ * get_ome_index() - Returns the index in the operation mapping table
+ *                   for device.
+ * @*omi_index: pointer for storing the index value
+ *
+ */
 void get_ome_index(u32 *omi_index, struct device *dev)
 {
 	if (of_device_is_compatible(dev->of_node, "fsl,qman-portal"))
@@ -610,7 +610,7 @@ static void __init setup_qbman_paace(struct paace *ppaace, int  paace_type)
 	case QMAN_PORTAL_PAACE:
 		set_bf(ppaace->impl_attr, PAACE_IA_OTM, PAACE_OTM_INDEXED);
 		ppaace->op_encode.index_ot.omi = OMI_QMAN;
-		/*Set DQRR and Frame stashing for the L3 cache */
+		/* Set DQRR and Frame stashing for the L3 cache */
 		set_bf(ppaace->impl_attr, PAACE_IA_CID, get_stash_id(PAMU_ATTR_CACHE_L3, 0));
 		break;
 	case BMAN_PAACE:
@@ -937,7 +937,7 @@ static int __init create_csd(phys_addr_t phys, size_t size, u32 csd_port_id)
 	}
 
 	if (i == 0 || i == num_laws) {
-		/* This should never happen*/
+		/* This should never happen */
 		ret = -ENOENT;
 		goto error;
 	}
@@ -1163,7 +1163,7 @@ static int __init fsl_pamu_probe(struct platform_device *pdev)
 
 	iounmap(guts_regs);
 
-	/* Enable DMA for the LIODNs in the device tree*/
+	/* Enable DMA for the LIODNs in the device tree */
 
 	setup_liodns();
 
