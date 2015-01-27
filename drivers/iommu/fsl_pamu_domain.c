@@ -62,8 +62,7 @@ static int __init iommu_init_mempool(void)
 static phys_addr_t get_phys_addr(struct fsl_dma_domain *dma_domain, dma_addr_t iova)
 {
 	u32 win_cnt = dma_domain->win_cnt;
-	struct dma_window *win_ptr =
-				&dma_domain->win_arr[0];
+	struct dma_window *win_ptr = &dma_domain->win_arr[0];
 	struct iommu_domain_geometry *geom;
 
 	geom = &dma_domain->iommu_domain->geometry;
@@ -92,15 +91,13 @@ static phys_addr_t get_phys_addr(struct fsl_dma_domain *dma_domain, dma_addr_t i
 
 static int map_subwins(int liodn, struct fsl_dma_domain *dma_domain)
 {
-	struct dma_window *sub_win_ptr =
-				&dma_domain->win_arr[0];
+	struct dma_window *sub_win_ptr = &dma_domain->win_arr[0];
 	int i, ret;
 	unsigned long rpn, flags;
 
 	for (i = 0; i < dma_domain->win_cnt; i++) {
 		if (sub_win_ptr[i].valid) {
-			rpn = sub_win_ptr[i].paddr >>
-				 PAMU_PAGE_SHIFT;
+			rpn = sub_win_ptr[i].paddr >> PAMU_PAGE_SHIFT;
 			spin_lock_irqsave(&iommu_lock, flags);
 			ret = pamu_config_spaace(liodn, dma_domain->win_cnt, i,
 						 sub_win_ptr[i].size,
@@ -180,8 +177,8 @@ static int update_liodn(int liodn, struct fsl_dma_domain *dma_domain, u32 wnd_nr
 					 wnd->size,
 					 ~(u32)0,
 					 wnd->paddr >> PAMU_PAGE_SHIFT,
-					dma_domain->snoop_id, dma_domain->stash_id,
-					0, wnd->prot);
+					 dma_domain->snoop_id, dma_domain->stash_id,
+					 0, wnd->prot);
 		if (ret)
 			pr_debug("Window reconfiguration failed for liodn %d\n", liodn);
 	}
@@ -679,7 +676,7 @@ static int fsl_pamu_attach_device(struct iommu_domain *domain,
 	} else {
 		pr_debug("missing fsl,liodn property at %s\n",
 			 dev->of_node->full_name);
-			ret = -EINVAL;
+		ret = -EINVAL;
 	}
 
 	return ret;
