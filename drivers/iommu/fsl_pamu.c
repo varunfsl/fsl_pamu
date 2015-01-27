@@ -56,7 +56,6 @@ static const struct of_device_id guts_device_ids[] __initconst = {
 	{}
 };
 
-
 /*
  * Table for matching compatible strings, for device tree
  * L3 cache controller node.
@@ -317,7 +316,6 @@ int pamu_disable_spaace(int liodn, u32 subwin)
 	return 0;
 }
 
-
 /**
  * pamu_config_paace() - Sets up PPAACE entry for specified liodn
  *
@@ -432,7 +430,6 @@ int pamu_config_spaace(int liodn, u32 subwin_cnt, u32 subwin,
 		       u32 snoopid, u32 stashid, int enable, int prot)
 {
 	struct paace *paace;
-
 
 	/* setup sub-windows */
 	if (!subwin_cnt) {
@@ -823,7 +820,6 @@ irqreturn_t pamu_av_isr(int irq, void *arg)
 			out_be32((p + PAMU_PICS), pics);
 		}
 	}
-
 
 	return IRQ_HANDLED;
 }

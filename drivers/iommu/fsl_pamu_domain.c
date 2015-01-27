@@ -633,6 +633,7 @@ static int handle_attach_device(struct fsl_dma_domain *dma_domain,
 		 */
 		if (dma_domain->win_arr) {
 			u32 win_cnt = dma_domain->win_cnt > 1 ? dma_domain->win_cnt : 0;
+
 			ret = pamu_set_liodn(liodn[i], dev, dma_domain,
 					      &domain->geometry,
 					      win_cnt);
@@ -822,7 +823,6 @@ static int fsl_pamu_set_domain_attr(struct iommu_domain *domain,
 	struct fsl_dma_domain *dma_domain = domain->priv;
 	int ret = 0;
 
-
 	switch (attr_type) {
 	case DOMAIN_ATTR_GEOMETRY:
 		ret = configure_domain_geometry(domain, data);
@@ -847,7 +847,6 @@ static int fsl_pamu_get_domain_attr(struct iommu_domain *domain,
 {
 	struct fsl_dma_domain *dma_domain = domain->priv;
 	int ret = 0;
-
 
 	switch (attr_type) {
 	case DOMAIN_ATTR_FSL_PAMU_STASH:
