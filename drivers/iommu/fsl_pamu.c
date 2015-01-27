@@ -278,9 +278,8 @@ int  pamu_update_paace_stash(int liodn, u32 subwin, u32 value)
 	}
 	if (subwin) {
 		paace = pamu_get_spaace(paace, subwin - 1);
-		if (!paace) {
+		if (!paace)
 			return -ENOENT;
-		}
 	}
 	set_bf(paace->impl_attr, PAACE_IA_CID, value);
 
@@ -301,9 +300,8 @@ int pamu_disable_spaace(int liodn, u32 subwin)
 	}
 	if (subwin) {
 		paace = pamu_get_spaace(paace, subwin - 1);
-		if (!paace) {
+		if (!paace)
 			return -ENOENT;
-		}
 		set_bf(paace->addr_bitfields, PAACE_AF_V,
 			 PAACE_V_INVALID);
 	} else {
@@ -351,9 +349,8 @@ int pamu_config_ppaace(int liodn, phys_addr_t win_addr, phys_addr_t win_size,
 	}
 
 	ppaace = pamu_get_ppaace(liodn);
-	if (!ppaace) {
+	if (!ppaace)
 		return -ENOENT;
-	}
 
 	/* window size is 2^(WSE+1) bytes */
 	set_bf(ppaace->addr_bitfields, PPAACE_AF_WSE,

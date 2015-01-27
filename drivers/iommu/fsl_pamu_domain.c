@@ -35,7 +35,6 @@ static DEFINE_SPINLOCK(device_domain_lock);
 
 static int __init iommu_init_mempool(void)
 {
-
 	fsl_pamu_domain_cache = kmem_cache_create("fsl_pamu_domain",
 					 sizeof(struct fsl_dma_domain),
 					 0,
@@ -153,7 +152,6 @@ static int map_liodn(int liodn, struct fsl_dma_domain *dma_domain)
 		return map_subwins(liodn, dma_domain);
 	else
 		return map_win(liodn, dma_domain);
-
 }
 
 /* Update window/subwindow mapping for the LIODN */
@@ -380,7 +378,6 @@ static void attach_device(struct fsl_dma_domain *dma_domain, int liodn, struct d
 	if (!dev->archdata.iommu_domain)
 		dev->archdata.iommu_domain = info;
 	spin_unlock_irqrestore(&device_domain_lock, flags);
-
 }
 
 static phys_addr_t fsl_pamu_iova_to_phys(struct iommu_domain *domain,
@@ -527,7 +524,6 @@ static void fsl_pamu_window_disable(struct iommu_domain *domain, u32 wnd_nr)
 	}
 
 	spin_unlock_irqrestore(&dma_domain->domain_lock, flags);
-
 }
 
 static int fsl_pamu_window_enable(struct iommu_domain *domain, u32 wnd_nr,
@@ -616,7 +612,6 @@ static int handle_attach_device(struct fsl_dma_domain *dma_domain,
 
 	spin_lock_irqsave(&dma_domain->domain_lock, flags);
 	for (i = 0; i < num; i++) {
-
 		/* Ensure that LIODN value is valid */
 		if (liodn[i] >= PAACE_NUMBER_ENTRIES) {
 			pr_debug("Invalid liodn %d, attach device failed for %s\n",
@@ -951,8 +946,9 @@ static struct iommu_group *get_pci_device_group(struct pci_dev *pdev)
 		if (pci_ctl->parent->iommu_group) {
 			group = get_device_iommu_group(pci_ctl->parent);
 			iommu_group_remove_device(pci_ctl->parent);
-		} else
+		} else {
 			group = get_shared_pci_device_group(pdev);
+		}
 	}
 
 	if (!group)
