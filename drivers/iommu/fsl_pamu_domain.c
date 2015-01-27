@@ -1037,8 +1037,9 @@ static int fsl_pamu_set_windows(struct iommu_domain *domain, u32 w_count)
 				((w_count > 1) ? w_count : 0));
 	if (!ret) {
 		kfree(dma_domain->win_arr);
-		dma_domain->win_arr = kzalloc(sizeof(*dma_domain->win_arr) *
-							  w_count, GFP_ATOMIC);
+		dma_domain->win_arr = kcalloc(w_count,
+					      sizeof(*dma_domain->win_arr),
+					      GFP_ATOMIC);
 		if (!dma_domain->win_arr) {
 			spin_unlock_irqrestore(&dma_domain->domain_lock, flags);
 			return -ENOMEM;
