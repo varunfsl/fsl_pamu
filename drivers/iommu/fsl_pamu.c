@@ -1039,7 +1039,7 @@ static int __init fsl_pamu_probe(struct platform_device *pdev)
 		goto error;
 	}
 
-	data = kzalloc(sizeof(struct pamu_isr_data), GFP_KERNEL);
+	data = kzalloc(sizeof(*data), GFP_KERNEL);
 	if (!data) {
 		dev_err(&pdev->dev, "PAMU isr data memory allocation failed\n");
 		ret = -ENOMEM;
