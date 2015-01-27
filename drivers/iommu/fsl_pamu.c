@@ -169,8 +169,8 @@ static unsigned int map_addrspace_size_to_wse(phys_addr_t addrspace_size)
 /* Derive the PAACE window count encoding for the subwindow count */
 static unsigned int map_subwindow_cnt_to_wce(u32 subwindow_cnt)
 {
-       /* window count is 2^(WCE+1) bytes */
-       return __ffs(subwindow_cnt) - 1;
+	/* window count is 2^(WCE+1) bytes */
+	return __ffs(subwindow_cnt) - 1;
 }
 
 /*
