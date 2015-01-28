@@ -830,7 +830,7 @@ static int fsl_pamu_set_domain_attr(struct iommu_domain *domain,
 		pr_debug("Unsupported attribute type\n");
 		ret = -EINVAL;
 		break;
-	};
+	}
 
 	return ret;
 }
@@ -856,7 +856,7 @@ static int fsl_pamu_get_domain_attr(struct iommu_domain *domain,
 		pr_debug("Unsupported attribute type\n");
 		ret = -EINVAL;
 		break;
-	};
+	}
 
 	return ret;
 }
