@@ -529,7 +529,7 @@ u32 get_stash_id(u32 stash_dest_hint, u32 vcpu)
 	if (stash_dest_hint == PAMU_ATTR_CACHE_L3) {
 		node = of_find_matching_node(NULL, l3_device_ids);
 		if (node) {
-			prop = of_get_property(node, "cache-stash-id", 0);
+			prop = of_get_property(node, "cache-stash-id", NULL);
 			if (!prop) {
 				pr_debug("missing cache-stash-id at %s\n",
 					 node->full_name);
@@ -556,7 +556,7 @@ found_cpu_node:
 	/* find the hwnode that represents the cache */
 	for (cache_level = PAMU_ATTR_CACHE_L1; (cache_level < PAMU_ATTR_CACHE_L3) && found; cache_level++) {
 		if (stash_dest_hint == cache_level) {
-			prop = of_get_property(node, "cache-stash-id", 0);
+			prop = of_get_property(node, "cache-stash-id", NULL);
 			if (!prop) {
 				pr_debug("missing cache-stash-id at %s\n",
 					 node->full_name);
@@ -567,7 +567,7 @@ found_cpu_node:
 			return be32_to_cpup(prop);
 		}
 
-		prop = of_get_property(node, "next-level-cache", 0);
+		prop = of_get_property(node, "next-level-cache", NULL);
 		if (!prop) {
 			pr_debug("can't find next-level-cache at %s\n",
 				 node->full_name);
