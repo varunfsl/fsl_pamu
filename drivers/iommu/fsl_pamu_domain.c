@@ -167,7 +167,8 @@ static int update_liodn(int liodn, struct fsl_dma_domain *dma_domain, u32 wnd_nr
 					 (wnd_nr > 0) ? 1 : 0,
 					 wnd->prot);
 		if (ret)
-			pr_debug("Subwindow reconfiguration failed for liodn %d\n", liodn);
+			pr_debug("Subwindow reconfiguration failed for liodn %d\n",
+				 liodn);
 	} else {
 		phys_addr_t wnd_addr;
 
@@ -180,7 +181,8 @@ static int update_liodn(int liodn, struct fsl_dma_domain *dma_domain, u32 wnd_nr
 					 dma_domain->snoop_id, dma_domain->stash_id,
 					 0, wnd->prot);
 		if (ret)
-			pr_debug("Window reconfiguration failed for liodn %d\n", liodn);
+			pr_debug("Window reconfiguration failed for liodn %d\n",
+				 liodn);
 	}
 
 	spin_unlock_irqrestore(&iommu_lock, flags);
@@ -196,7 +198,8 @@ static int update_liodn_stash(int liodn, struct fsl_dma_domain *dma_domain,
 
 	spin_lock_irqsave(&iommu_lock, flags);
 	if (!dma_domain->win_arr) {
-		pr_debug("Windows not configured, stash destination update failed for liodn %d\n", liodn);
+		pr_debug("Windows not configured, stash destination update failed for liodn %d\n",
+			 liodn);
 		spin_unlock_irqrestore(&iommu_lock, flags);
 		return -EINVAL;
 	}
@@ -204,7 +207,8 @@ static int update_liodn_stash(int liodn, struct fsl_dma_domain *dma_domain,
 	for (i = 0; i < dma_domain->win_cnt; i++) {
 		ret = pamu_update_paace_stash(liodn, i, val);
 		if (ret) {
-			pr_debug("Failed to update SPAACE %d field for liodn %d\n ", i, liodn);
+			pr_debug("Failed to update SPAACE %d field for liodn %d\n ",
+				 i, liodn);
 			spin_unlock_irqrestore(&iommu_lock, flags);
 			return ret;
 		}
@@ -245,7 +249,8 @@ static int pamu_set_liodn(int liodn, struct device *dev,
 					 dma_domain->stash_id, win_cnt, 0);
 	spin_unlock_irqrestore(&iommu_lock, flags);
 	if (ret) {
-		pr_debug("PAACE configuration failed for liodn %d, win_cnt =%d\n", liodn, win_cnt);
+		pr_debug("PAACE configuration failed for liodn %d, win_cnt =%d\n",
+			 liodn, win_cnt);
 		return ret;
 	}
 
@@ -262,7 +267,8 @@ static int pamu_set_liodn(int liodn, struct device *dev,
 							 0, 0);
 			spin_unlock_irqrestore(&iommu_lock, flags);
 			if (ret) {
-				pr_debug("SPAACE configuration failed for liodn %d\n", liodn);
+				pr_debug("SPAACE configuration failed for liodn %d\n",
+					 liodn);
 				return ret;
 			}
 		}

@@ -338,7 +338,8 @@ int pamu_config_ppaace(int liodn, phys_addr_t win_addr, phys_addr_t win_size,
 	unsigned long fspi;
 
 	if ((win_size & (win_size - 1)) || win_size < PAMU_PAGE_SIZE) {
-		pr_debug("window size too small or not a power of two %pa\n", &win_size);
+		pr_debug("window size too small or not a power of two %pa\n",
+			 &win_size);
 		return -EINVAL;
 	}
 
@@ -530,7 +531,8 @@ u32 get_stash_id(u32 stash_dest_hint, u32 vcpu)
 		if (node) {
 			prop = of_get_property(node, "cache-stash-id", 0);
 			if (!prop) {
-				pr_debug("missing cache-stash-id at %s\n", node->full_name);
+				pr_debug("missing cache-stash-id at %s\n",
+					 node->full_name);
 				of_node_put(node);
 				return ~(u32)0;
 			}
@@ -556,7 +558,8 @@ found_cpu_node:
 		if (stash_dest_hint == cache_level) {
 			prop = of_get_property(node, "cache-stash-id", 0);
 			if (!prop) {
-				pr_debug("missing cache-stash-id at %s\n", node->full_name);
+				pr_debug("missing cache-stash-id at %s\n",
+					 node->full_name);
 				of_node_put(node);
 				return ~(u32)0;
 			}
@@ -793,7 +796,8 @@ irqreturn_t pamu_av_isr(int irq, void *arg)
 
 				/* Only the first four words are relevant */
 				for (j = 0; j < 4; j++)
-					pr_emerg("PAACE[%u]=%08x\n", j, in_be32(paace + j));
+					pr_emerg("PAACE[%u]=%08x\n",
+						 j, in_be32(paace + j));
 			}
 
 			/* clear access violation condition */
@@ -813,7 +817,8 @@ irqreturn_t pamu_av_isr(int irq, void *arg)
 				/* Disable the LIODN */
 				ret = pamu_disable_liodn(avs1 >> PAMU_AVS1_LIODN_SHIFT);
 				BUG_ON(ret);
-				pr_emerg("Disabling liodn %x\n", avs1 >> PAMU_AVS1_LIODN_SHIFT);
+				pr_emerg("Disabling liodn %x\n",
+					 avs1 >> PAMU_AVS1_LIODN_SHIFT);
 			}
 			out_be32((p + PAMU_PICS), pics);
 		}
