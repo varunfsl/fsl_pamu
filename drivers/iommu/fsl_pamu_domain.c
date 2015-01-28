@@ -880,10 +880,7 @@ static  bool check_pci_ctl_endpt_part(struct pci_controller *pci_ctl)
 	version = in_be32(pci_ctl->cfg_addr + (PCI_FSL_BRR1 >> 2));
 	version &= PCI_FSL_BRR1_VER;
 	/* If PCI controller version is >= 0x204 we can partition endpoints */
-	if (version >= 0x204)
-		return 1;
-
-	return 0;
+	return version >= 0x204;
 }
 
 /* Get iommu group information from peer devices or devices on the parent bus */
