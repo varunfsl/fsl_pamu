@@ -75,7 +75,7 @@ static const struct of_device_id l3_device_ids[] = {
 static u32 max_subwindow_count;
 
 /* Pool for fspi allocation */
-struct gen_pool *spaace_pool;
+static struct gen_pool *spaace_pool;
 
 /**
  * pamu_get_max_subwin_cnt() - Return the maximum supported
@@ -759,7 +759,7 @@ static void __init setup_liodns(void)
 	}
 }
 
-irqreturn_t pamu_av_isr(int irq, void *arg)
+static irqreturn_t pamu_av_isr(int irq, void *arg)
 {
 	struct pamu_isr_data *data = arg;
 	phys_addr_t phys;
