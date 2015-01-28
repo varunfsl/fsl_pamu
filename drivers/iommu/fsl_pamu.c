@@ -160,7 +160,7 @@ int pamu_disable_liodn(int liodn)
 static unsigned int map_addrspace_size_to_wse(phys_addr_t addrspace_size)
 {
 	/* Bug if not a power of 2 */
-	BUG_ON((addrspace_size & (addrspace_size - 1)));
+	BUG_ON(addrspace_size & (addrspace_size - 1));
 
 	/* window size is 2^(WSE+1) bytes */
 	return fls64(addrspace_size) - 2;
@@ -801,7 +801,7 @@ static irqreturn_t pamu_av_isr(int irq, void *arg)
 			}
 
 			/* clear access violation condition */
-			out_be32((p + PAMU_AVS1), avs1 & PAMU_AV_MASK);
+			out_be32(p + PAMU_AVS1, avs1 & PAMU_AV_MASK);
 			paace = pamu_get_ppaace(avs1 >> PAMU_AVS1_LIODN_SHIFT);
 			BUG_ON(!paace);
 			/* check if we got a violation for a disabled LIODN */

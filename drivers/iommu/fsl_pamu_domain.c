@@ -84,7 +84,7 @@ static phys_addr_t get_phys_addr(struct fsl_dma_domain *dma_domain, dma_addr_t i
 	}
 
 	if (win_ptr->valid)
-		return (win_ptr->paddr + (iova & (win_ptr->size - 1)));
+		return win_ptr->paddr + (iova & (win_ptr->size - 1));
 
 	return 0;
 }
@@ -386,8 +386,8 @@ static phys_addr_t fsl_pamu_iova_to_phys(struct iommu_domain *domain,
 {
 	struct fsl_dma_domain *dma_domain = domain->priv;
 
-	if ((iova < domain->geometry.aperture_start) ||
-	    iova > (domain->geometry.aperture_end))
+	if (iova < domain->geometry.aperture_start ||
+	    iova > domain->geometry.aperture_end)
 		return 0;
 
 	return get_phys_addr(dma_domain, iova);
@@ -1029,7 +1029,7 @@ static int fsl_pamu_set_windows(struct iommu_domain *domain, u32 w_count)
 	}
 
 	ret = pamu_set_domain_geometry(dma_domain, &domain->geometry,
-				       ((w_count > 1) ? w_count : 0));
+				       w_count > 1 ? w_count : 0);
 	if (!ret) {
 		kfree(dma_domain->win_arr);
 		dma_domain->win_arr = kcalloc(w_count,

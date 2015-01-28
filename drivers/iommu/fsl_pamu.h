@@ -26,8 +26,8 @@
 /* Bit Field macros
  *	v = bit field variable; m = mask, m##_SHIFT = shift, x = value to load
  */
-#define set_bf(v, m, x)		(v = ((v) & ~(m)) | (((x) << (m##_SHIFT)) & (m)))
-#define get_bf(v, m)		(((v) & (m)) >> (m##_SHIFT))
+#define set_bf(v, m, x)		(v = ((v) & ~(m)) | (((x) << m##_SHIFT) & (m)))
+#define get_bf(v, m)		(((v) & (m)) >> m##_SHIFT)
 
 /* PAMU CCSR space */
 #define PAMU_PGC 0x00000000     /* Allows all peripheral accesses */
